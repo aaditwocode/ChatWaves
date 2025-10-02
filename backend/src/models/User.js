@@ -47,6 +47,11 @@ const userSchema = new mongoose.Schema({
   }]
 }, { timestamps: true });
 
+
+userSchema.methods.comparePassword = async function(candidatePassword) {
+  return bcrypt.compare(candidatePassword, this.password);
+}
+
 // Password hashing pre-save hook
 userSchema.pre("save", async function(next) {
   try {
